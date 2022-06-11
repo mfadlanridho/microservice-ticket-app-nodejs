@@ -1,15 +1,20 @@
+# configuration to tell nginx controller 
+# how to handle incoming request
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-service
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
+  # made up domain name for local machine
     - host: ticketing.dev
       http:
         paths:
+        # when someone makes request to cluster that has this path
+        # send that request to this backend
           - path: /api/users/?(.*)
             pathType: Prefix
             backend:

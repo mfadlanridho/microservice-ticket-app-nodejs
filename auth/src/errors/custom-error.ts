@@ -8,6 +8,7 @@ export abstract class CustomError extends Error {
   // require message string for server logs
   constructor(message: string) {
     super(message);
+
     // required when extending built in class
     Object.setPrototypeOf(this, CustomError.prototype);
   }

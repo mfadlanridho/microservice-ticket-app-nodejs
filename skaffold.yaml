@@ -2,17 +2,32 @@ apiVersion: skaffold/v2alpha3
 kind: Config
 deploy:
   kubectl:
+    # list out all kubernetes files we want to sync
     manifests:
       - ./infra/k8s/*
 build:
-  local:
-    push: false
+# whenever we push an image dont push it to dockerhub
+  # local:
+  #   push: false
+  googleCloudBuild:
+    projectId: ticketing-dev-352916
+# list out images thats going to be produced by auth project
   artifacts:
-    - image: mfadlanridho/auth
+    - image: us.gcr.io/ticketing-dev-352916/auth
       context: auth
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
+          # sync all ts files in src with *.ts
+          # and push it to .
           - src: 'src/**/*.ts'
+            dest: .
+    - image: us.gcr.io/ticketing-dev-352916/ticketing-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
             dest: .
