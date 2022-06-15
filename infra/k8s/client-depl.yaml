@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: cygnetops/ticketing-client
+          image: us.gcr.io/ticketing-dev-352916/ticketing-client
 ---
 apiVersion: v1
 kind: Service

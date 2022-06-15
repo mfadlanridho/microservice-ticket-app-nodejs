@@ -45,11 +45,6 @@ interface UserModel extends mongoose.Model<UserDoc> {
   build(attrs: UserAttrs): any;
 }
 
-// create build method in schema
-userSchema.statics.build = (attrs: UserAttrs) => {
-  return new User(attrs);
-}
-
 // middleware before save: hashing the password
 userSchema.pre('save', async function (done) {
   // if password is modified / just created
@@ -59,6 +54,11 @@ userSchema.pre('save', async function (done) {
   }
   done();
 })
+
+// create build method in schema
+userSchema.statics.build = (attrs: UserAttrs) => {
+  return new User(attrs);
+}
 
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
